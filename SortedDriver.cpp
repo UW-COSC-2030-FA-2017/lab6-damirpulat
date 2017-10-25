@@ -1,4 +1,7 @@
 // SortedDriver.cpp
+// Damir Pulatov
+// COSC 2030
+// 10/25/2017
 
 // tom bailey   1445  25 mar 2014
 // Construct sorted sequences and call functions that 
@@ -63,8 +66,63 @@ getWords(size_t numWords, size_t wordLength, string alphabet)
 double
 mostIsolated(vector<double> & number)
 {
-	// STUB  STUB  STUB
-	return -123.456;
+
+	// Find length of number vector
+	int length = number.size();
+
+
+	// Set up vector to store distances
+	vector<double> distance(length, 0);
+
+
+	// Calculate absolute value distances
+	// Compare left and right neighbors' distances
+	// Choose the smallest to find the nearest neighbor
+	for (int i = 0; i < length; i++)
+	{
+		// If first/last element, find right/left distances only
+		if (i == 0)
+		{
+			distance[i] = abs(number[i] - number[i + 1]);
+		}
+		else if (i == length - 1)
+		{
+			distance[i] = abs(number[i] - number[i - 1]);
+		}
+
+		// Calculate left and right distances and find the nearest neighbor
+		else
+		{
+			double left = abs(number[i] - number[i - 1]);
+			double right = abs(number[i] - number[i + 1]);
+			if (left > right)
+			{
+				distance[i] = right;
+			}
+			else
+			{
+				distance[i] = left;
+			}
+		}
+	}
+
+
+	// Find the max distance from the distance vector
+	double max = distance[0];
+	int max_index = 0;
+
+	for (int i = 0; i < length; i++)
+	{
+		if (distance[i] > max)
+		{
+			max = distance[i];
+			max_index = i;
+		}
+	}
+
+
+	return number[max_index];
+
 }
 
 
@@ -75,7 +133,28 @@ int
 unmatched(list<string> & A, list<string> & B)
 {
 	// STUB  STUB  STUB
-	return -1;
+	// Inititalize number of matched words to zero
+	int matched = 0;
+
+	// Iterate through two lists with iterators
+	// If found a match, break and increment number of matched
+	for (list<string>::iterator it_a = A.begin(); it_a != A.end(); it_a++)
+	{
+		for (list<string>::iterator it_b = B.begin(); it_b != B.end(); it_b++)
+		{
+			if (*it_a == *it_b)
+			{
+				matched++;
+				break;
+			}
+		}
+
+	}
+
+	// Number of unmatched = size - matched
+	int unmatched = A.size() - matched;
+
+	return unmatched;
 }
 
 
