@@ -72,23 +72,21 @@ mostIsolated(vector<double> & number)
 	int length = number.size();
 
 
-	// Set up vector to store distances
-	vector<double> distance(length, 0);
+	// Set up variables to store the distances and max distance
+	double distance;
+	double max = 0;
+	int max_index = 0;
 
-
-	// Calculate absolute value distances
-	// Compare left and right neighbors' distances
-	// Choose the smallest to find the nearest neighbor
 	for (int i = 0; i < length; i++)
 	{
 		// If first/last element, find right/left distances only
 		if (i == 0)
 		{
-			distance[i] = abs(number[i] - number[i + 1]);
+			distance = abs(number[i] - number[i + 1]);
 		}
 		else if (i == length - 1)
 		{
-			distance[i] = abs(number[i] - number[i - 1]);
+			distance = abs(number[i] - number[i - 1]);
 		}
 
 		// Calculate left and right distances and find the nearest neighbor
@@ -98,27 +96,21 @@ mostIsolated(vector<double> & number)
 			double right = abs(number[i] - number[i + 1]);
 			if (left > right)
 			{
-				distance[i] = right;
+				distance = right;
 			}
 			else
 			{
-				distance[i] = left;
+				distance = left;
 			}
 		}
-	}
 
-
-	// Find the max distance from the distance vector
-	double max = distance[0];
-	int max_index = 0;
-
-	for (int i = 0; i < length; i++)
-	{
-		if (distance[i] > max)
+		// Compare distances and find max distance index
+		if (distance > max)
 		{
-			max = distance[i];
+			max = distance;
 			max_index = i;
 		}
+
 	}
 
 
