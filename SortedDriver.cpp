@@ -1,7 +1,7 @@
 // SortedDriver.cpp
 // Damir Pulatov
 // COSC 2030
-// 10/25/2017
+// 10/27/2017
 
 // tom bailey   1445  25 mar 2014
 // Construct sorted sequences and call functions that 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 
 using namespace std;
@@ -138,18 +139,34 @@ unmatched(list<string> & A, list<string> & B)
 
 	// Iterate through two lists with iterators
 	// If found a match, break and increment number of matched
-	for (list<string>::iterator it_a = A.begin(); it_a != A.end(); it_a++)
-	{
-		for (list<string>::iterator it_b = B.begin(); it_b != B.end(); it_b++)
-		{
-			if (*it_a == *it_b)
-			{
-				matched++;
-				break;
-			}
-		}
+	int index_offset = 0;
 
+	// Set up iterators
+	list<string>::iterator it_a = A.begin();
+	list<string>::iterator it_b = B.begin();
+
+
+	// Search through strings
+	while (it_a != A.end() && it_b != B.end())
+	{
+		// If words are equal, count as match
+		if (*it_a == *it_b)
+		{
+			it_a++;
+			matched++;
+		}
+		// If the word in first list is greater, move to next word in second list (there can be a match)
+		else if(*it_a > *it_b)
+		{
+			it_b++;
+		}
+		// If the word in first list is less, move to next word in first list (there is no match)
+		else if (*it_a < *it_b)
+		{
+			it_a++;
+		}
 	}
+
 
 	// Number of unmatched = size - matched
 	int unmatched = A.size() - matched;
